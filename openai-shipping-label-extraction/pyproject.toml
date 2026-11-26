@@ -5,6 +5,7 @@ description = "gpt-4o-mini reads fictional shipping-label images into a typed mo
 requires-python = ">=3.12"
 dependencies = [
     "openai>=1.60",
+    "opik>=2.3.6",
     "pillow>=10.1",
     "pydantic>=2",
     "python-dotenv>=1.0",
