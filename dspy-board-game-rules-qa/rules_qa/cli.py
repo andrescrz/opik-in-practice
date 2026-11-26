@@ -13,6 +13,7 @@ def main() -> None:
     ask.add_argument("--compiled", action="store_true",
                      help="use the program saved by `rules-qa compile`")
     sub.add_parser("compile", help="compile with BootstrapFewShot and save it")
+    sub.add_parser("run", help="run the suite on the raw and the compiled program")
     args = parser.parse_args()
 
     setup_dspy()
@@ -21,6 +22,13 @@ def main() -> None:
 
         compile_program()
         print("Compiled program saved.")
+        opik.flush_tracker()
+        return
+
+    if args.command == "run":
+        from .suite import run_suite_comparison
+
+        run_suite_comparison()
         opik.flush_tracker()
         return
 
