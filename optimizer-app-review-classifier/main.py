@@ -1,5 +1,7 @@
 """Score the baseline prompt on the labeled reviews."""
 
+import opik
+
 from classify import classify, intent_match
 from reviews import REVIEWS
 
@@ -12,6 +14,8 @@ def main() -> None:
         hits += score
         print(f"[{'ok' if score else 'x '}] want={label:<20} got={answer[:60]!r}")
     print(f"\nbaseline accuracy: {hits / len(REVIEWS):.3f}")
+    # Traces are sent in the background; flush so a short script doesn't exit before they upload.
+    opik.flush_tracker()
 
 
 if __name__ == "__main__":
