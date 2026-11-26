@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 export function loadNearestEnv(start: string): void {
   for (let dir = start; ; dir = path.dirname(dir)) {
     const file = path.join(dir, ".env");
-    if (existsSync(file)) return void dotenv.config({ path: file });
+    if (existsSync(file)) return void dotenv.config({ path: file, quiet: true });
     if (path.dirname(dir) === dir) return;
   }
 }
