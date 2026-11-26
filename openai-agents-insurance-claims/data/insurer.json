@@ -1,0 +1,18 @@
+{
+  "policies": {
+    "AU-4471": {"holder": "Marta Okafor", "line": "auto", "status": "active", "deductible_usd": 500,
+                "covered": ["collision", "theft", "glass", "rental_reimbursement"], "excluded": ["racing", "commercial_use"]},
+    "HM-2290": {"holder": "Dev Lindqvist", "line": "home", "status": "active", "deductible_usd": 1000,
+                "covered": ["fire", "wind", "theft", "burst_pipe"], "excluded": ["flood", "earthquake"]},
+    "HM-3318": {"holder": "Ines Barros", "line": "home", "status": "lapsed", "deductible_usd": 750,
+                "covered": ["fire", "wind", "theft", "burst_pipe"], "excluded": ["flood"]},
+    "TM-5513": {"holder": "Owen Fairweather", "line": "travel_medical", "status": "active", "deductible_usd": 100,
+                "covered": ["emergency_care", "medical_evacuation", "trip_interruption"], "excluded": ["elective_surgery", "extreme_sports"]}
+  },
+  "claims": {
+    "CL-7003": {"policy_id": "HM-2290", "status": "under_review", "amount_usd": 4200, "adjuster": "R. Castellanos",
+                "note": "Kitchen burst pipe; plumber invoice received, awaiting contractor estimate."},
+    "CL-7011": {"policy_id": "AU-4471", "status": "approved", "amount_usd": 1850, "adjuster": "P. Wójcik",
+                "note": "Windshield replacement approved; payout scheduled."}
+  }
+}
