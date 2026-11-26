@@ -1,0 +1,18 @@
+item,unit,unit_price_usd,notes
+Demolition and haul-away (kitchen),job,1800,includes dumpster
+Demolition and haul-away (bath),job,1500,includes dumpster
+Shaker cabinets (stock),linear ft,310,delivered; 14 linear ft needed in this kitchen
+Quartz countertop,sq ft,85,fabricated and installed; about 38 sq ft here
+Under-cabinet LED strip,linear ft,18,about 12 linear ft here
+Range hood (ducted),each,640,installed
+Kitchen backsplash tile,sq ft,22,installed; about 30 sq ft here
+Walk-in shower kit with glass,each,2900,installed
+Vanity 36 in with top,each,780,installed
+Porcelain floor tile (large format),sq ft,16,installed; about 45 sq ft in bath
+Exhaust fan with humidity sensor,each,260,installed
+Plumber,hour,95,rough-in and fixtures
+Electrician,hour,90,lighting and fan circuits
+General labor and finish,hour,65,paint and trim
+Permit and board fee,job,450,flat
+Lead times,note,0,cabinets 3 weeks; quartz 2 weeks after template; shower kit 10 days; tile 1 week
+Typical labor,note,0,kitchen 6 working days after demolition; bath 8 working days after demolition
