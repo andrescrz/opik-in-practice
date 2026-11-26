@@ -1,0 +1,17 @@
+# payments-api gateway and database client logs, 12 March
+
+14:08:41 payments-api-7 INFO config loaded: DB_POOL_MAX=20 DB_POOL_MIN=5 RETRY_BUDGET=5
+14:08:44 payments-api-3 INFO config loaded: DB_POOL_MAX=20 DB_POOL_MIN=5 RETRY_BUDGET=5
+
+14:16:52 payments-api-3 WARN db pool: 20/20 connections in use, 14 requests waiting
+14:17:30 payments-api-7 WARN db pool: 20/20 connections in use, 31 requests waiting
+14:18:03 payments-api-1 ERROR checkout timeout after 2000ms waiting for a database connection
+
+14:24:12 gateway WARN retries: 3.8x normal request volume, mostly POST /v1/payments retried by mobile clients
+14:24:40 gateway WARN upstream payments-api returned 503 for 8.4% of requests in the last minute
+
+14:47:55 payments-api-2 INFO deploy: application image rolled back to build 4417
+14:52:10 payments-api-2 ERROR checkout timeout after 2000ms waiting for a database connection
+
+15:33:20 payments-api-5 INFO config loaded: DB_POOL_MAX=200 DB_POOL_MIN=20 RETRY_BUDGET=5
+15:36:02 gateway INFO upstream payments-api 503 rate 0.9%
