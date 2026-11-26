@@ -1,0 +1,16 @@
+[project]
+name = "whisper-vet-voicemail-triage"
+version = "0.1.0"
+description = "Veterinary voicemail triage (TTS -> Whisper -> gpt-4o-mini), traced in Opik with playable MP3 attachments and an LLM-judge test suite"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=3.24.0",
+    "opik>=2.2.89",
+    "python-dotenv>=1.2.4",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
