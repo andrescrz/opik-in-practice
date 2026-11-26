@@ -4,6 +4,7 @@ The chain takes the patron's message as a plain string and returns the reply as 
 plain string. Everything else (history, catalog matches) is loaded inside the first step.
 """
 
+import opik
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -25,6 +26,9 @@ Catalog matches for this turn:
 SESSIONS: dict[str, list[BaseMessage]] = {}
 
 
+# type="tool" makes catalog lookup its own named tool span (query in, matches out) under the turn's
+# chain run; a bare function inside a RunnableLambda would be invisible in the trace tree.
+@opik.track(name="search-library-catalog", type="tool")
 def retrieve_books(query: str) -> str:
     return format_books(search_catalog(query))
 

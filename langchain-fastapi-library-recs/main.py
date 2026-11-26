@@ -1,5 +1,6 @@
 """Boot the chat API in-process, play three scripted patron conversations, and exit."""
 
+import opik
 from fastapi.testclient import TestClient
 
 from librarian.app import app
@@ -29,6 +30,8 @@ def main() -> None:
             for message in turns:
                 reply = client.post("/chat", json={"message": message, "session_id": session_id}).json()["reply"]
                 print(f"patron: {message}\nlibrary: {reply}\n")
+    # Traces are sent in the background; flush so none are lost when the process exits.
+    opik.flush_tracker()
 
 
 if __name__ == "__main__":
