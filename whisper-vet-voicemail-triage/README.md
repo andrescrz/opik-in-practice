@@ -55,7 +55,6 @@ Offline tests, no keys needed: `env -u OPENAI_API_KEY OPIK_TRACK_DISABLE=true uv
 
 - **`transcribe` shows no cost or tokens.** `track_openai` instruments chat and speech calls, but the Whisper transcription is only recorded as the span that wraps it (a plain `@opik.track`). Put whatever you want to see (transcript, duration) in that span's output; don't expect usage.
 - **Traces land in "Default Project".** Opik reads the project name when it first initialises, so `main.py` loads `.env` and sets `OPIK_PROJECT_NAME` before `import opik`. Keep that order if you restructure imports. Suites also need `project_name=` in `get_or_create_test_suite`, otherwise the experiment goes to the default project.
-- **Judge model overrides.** If you pass a custom judge model to `run_tests`, don't include `reasoning_effort`; the judge call fails. The default judge works, and flakiness is handled with `global_execution_policy={"runs_per_item": 3, "pass_threshold": 2}`.
 - **Whisper misspells names.** Not an error, so nothing flags it. That is why the audio is attached: the only way to catch it is to listen.
 
 ## How it's put together
