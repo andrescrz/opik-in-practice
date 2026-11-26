@@ -5,6 +5,7 @@ description = "A three-agent CrewAI crew that plans a kitchen and bath renovatio
 requires-python = ">=3.12"
 dependencies = [
     "crewai>=1.15.17",
+    "opik>=2.2.35",
     "python-dotenv>=1.2.3",
 ]
 

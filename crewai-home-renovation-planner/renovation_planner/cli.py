@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+import opik
 from dotenv import find_dotenv, load_dotenv
 
 # Load the nearest .env (walking up from the working directory) before crewai reads keys.
@@ -22,6 +23,8 @@ def main(argv: list[str] | None = None) -> None:
     result = build_crew().kickoff(inputs={"brief": brief, "price_sheet": load_price_sheet()})
     print("\n=== RENOVATION PLAN ===\n")
     print(result)
+    # Traces are sent from a background thread; flush so a short-lived CLI doesn't exit before they land.
+    opik.flush_tracker()
 
 
 if __name__ == "__main__":
