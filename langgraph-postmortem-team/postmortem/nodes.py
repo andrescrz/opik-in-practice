@@ -21,8 +21,11 @@ def planner(state: PostmortemState, llm) -> dict:
          "fixed set of artifacts: an incident timeline, alert history, "
          "service logs, chat excerpts from the incident channel, and process "
          "documents. Split the investigation into 3-4 concrete questions, each "
-         "answerable from those artifacts. Cover: what changed and why, how "
-         "detection worked, what slowed the response, and what made it worse."),
+         "answerable from those artifacts. Phrase each question with the concrete "
+         "terms the artifacts use (releases, config values, rollbacks, alert "
+         "names, pool sizes). Cover: which release or setting changed and what "
+         "its values were before and after, how detection worked, what slowed "
+         "the response, and what made the impact worse."),
         ("user", state["incident"]),
     ])
     return {"questions": plan.questions, "findings": []}
@@ -32,7 +35,7 @@ def investigator(state: PostmortemState, llm, corpus: list[dict]) -> dict:
     """Answer the next open question from the best-matching artifact chunks."""
     question = state["questions"][len(state["findings"])]
     hits = search(question, corpus)
-    excerpts = "\n\n---\n\n".join(f"[{h['source']}]\n{h['text']}" for h in hits)
+    excerpts = "\n\n---\n\n".join(f"[{h['source']}] {h['title']}\n{h['text']}" for h in hits)
     answer = llm.invoke([
         ("system",
          "You are an incident investigator. Answer the question using only "
@@ -65,6 +68,7 @@ def writer(state: PostmortemState, llm) -> dict:
         ("system",
          "You write blameless post-mortems. Sections: Summary, Impact, "
          "Timeline, Contributing factors, What went well, Action items. "
+         "Name the root cause explicitly in Summary and Contributing factors. "
          "Describe systems and processes, never blame individuals (refer to "
          "roles such as 'the on-call engineer'). Use only the notes below and "
          "keep every time, number and source accurate. Under 500 words.\n\n"

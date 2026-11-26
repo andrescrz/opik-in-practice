@@ -22,7 +22,7 @@ def load_corpus(data_dir: pathlib.Path = DATA_DIR) -> list[dict]:
             continue
         title, *blocks = [b.strip() for b in path.read_text().split("\n\n") if b.strip()]
         for block in blocks:
-            chunks.append({"source": path.name, "text": f"{title.lstrip('# ')}\n{block}"})
+            chunks.append({"source": path.name, "title": title.lstrip("# "), "text": block})
     return chunks
 
 
