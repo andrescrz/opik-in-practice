@@ -3,6 +3,8 @@
 import argparse
 import uuid
 
+import opik
+
 from concierge.config import load_env, make_client
 from concierge.demo import SCENARIOS
 from concierge.knowledge import load_space
@@ -41,3 +43,7 @@ def main() -> None:
         (run_chat if args.chat else run_demo)(client, system_prompt)
     except KeyboardInterrupt:
         print("\nGoodbye!")
+    finally:
+        # Traces are sent from a background thread; flushing before exit stops
+        # the last turns from being dropped.
+        opik.flush_tracker()

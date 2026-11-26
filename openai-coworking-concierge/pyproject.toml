@@ -5,6 +5,7 @@ description = "Front-desk chatbot for a fictional coworking space, traced with O
 requires-python = ">=3.12"
 dependencies = [
     "openai>=1.60",
+    "opik>=2.3.5",
     "python-dotenv>=1.0",
 ]
 

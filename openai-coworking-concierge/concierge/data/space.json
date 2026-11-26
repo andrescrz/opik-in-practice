@@ -1,6 +1,6 @@
 {
   "name": "Larkspur Yard",
-  "tagline": "A converted print works with 60 desks, five meeting rooms and a very loud espresso machine.",
+  "tagline": "A converted print works with 60 desks, three meeting rooms and a very loud espresso machine.",
   "hours": "Members 07:00-22:00 daily. Day-pass guests 08:00-19:00, Monday to Friday.",
   "desks": [
     {"type": "hot desk", "price": "EUR 18 per day or EUR 190 per month", "notes": "First come, first served; book a day ahead to guarantee a seat."},
