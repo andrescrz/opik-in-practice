@@ -1,0 +1,27 @@
+[
+  {
+    "id": "retry-backoff",
+    "title": "Add exponential backoff to the payments client",
+    "diff": "--- a/payments/client.py\n+++ b/payments/client.py\n@@ -18,9 +18,16 @@ class PaymentsClient:\n-    def charge(self, order_id, cents):\n-        resp = self.session.post(self.url, json={\"order\": order_id, \"cents\": cents})\n-        resp.raise_for_status()\n-        return resp.json()\n+    def charge(self, order_id, cents, attempts=4):\n+        delay = 0.5\n+        for attempt in range(attempts):\n+            resp = self.session.post(self.url, json={\"order\": order_id, \"cents\": cents})\n+            if resp.status_code < 500:\n+                resp.raise_for_status()\n+                return resp.json()\n+            time.sleep(delay)\n+            delay *= 2\n+        raise PaymentsUnavailable(order_id)\n"
+  },
+  {
+    "id": "csv-export-bug",
+    "title": "Fix off-by-one in CSV export",
+    "diff": "--- a/reports/export.py\n+++ b/reports/export.py\n@@ -40,7 +40,7 @@ def export_rows(rows, out):\n     writer = csv.writer(out)\n     writer.writerow(HEADER)\n-    for i in range(1, len(rows)):\n+    for i in range(len(rows)):\n         writer.writerow(rows[i].as_list())\n     return len(rows)\n"
+  },
+  {
+    "id": "cache-ttl",
+    "title": "Make the session cache TTL configurable",
+    "diff": "--- a/auth/cache.py\n+++ b/auth/cache.py\n@@ -3,10 +3,12 @@\n-SESSION_TTL = 3600\n+import os\n+\n+SESSION_TTL = int(os.environ.get(\"SESSION_TTL_SECONDS\", \"3600\"))\n \n class SessionCache:\n     def put(self, token, user):\n-        self._store.set(token, user, ex=SESSION_TTL)\n+        self._store.set(token, user, ex=SESSION_TTL if SESSION_TTL > 0 else None)\n"
+  },
+  {
+    "id": "sql-concat",
+    "title": "Search endpoint filters by customer name",
+    "diff": "--- a/api/search.py\n+++ b/api/search.py\n@@ -12,6 +12,10 @@ def search(request):\n     term = request.args.get(\"q\", \"\")\n-    rows = db.execute(\"SELECT * FROM customers LIMIT 50\")\n+    rows = db.execute(\n+        \"SELECT * FROM customers WHERE name LIKE '%\" + term + \"%' LIMIT 50\"\n+    )\n     return jsonify([dict(r) for r in rows])\n"
+  },
+  {
+    "id": "rename-helper",
+    "title": "Rename parse_date to parse_iso_date across the codebase",
+    "diff": "--- a/utils/dates.py\n+++ b/utils/dates.py\n@@ -5,3 +5,3 @@\n-def parse_date(text):\n+def parse_iso_date(text):\n     return datetime.fromisoformat(text)\n--- a/jobs/nightly.py\n+++ b/jobs/nightly.py\n@@ -9,2 +9,2 @@\n-from utils.dates import parse_date\n-start = parse_date(os.environ[\"START\"])\n+from utils.dates import parse_iso_date\n+start = parse_iso_date(os.environ[\"START\"])\n"
+  }
+]
