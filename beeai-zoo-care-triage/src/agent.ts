@@ -1,9 +1,7 @@
 import { ReActAgent } from "beeai-framework/agents/react/agent";
 import { OpenAIChatModel } from "beeai-framework/adapters/openai/backend/chat";
 import { UnconstrainedMemory } from "beeai-framework/memory/unconstrainedMemory";
-// Vercel AI SDK (used under BeeAI) prints a system-message warning on every LLM call.
-(globalThis as { AI_SDK_LOG_WARNINGS?: boolean }).AI_SDK_LOG_WARNINGS = false;
-
+import { MODEL } from "./config.ts";
 import { tools } from "./tools.ts";
 
 export const INSTRUCTIONS = `You triage animal-care requests for keepers at Marrow Creek Zoo.
@@ -26,7 +24,7 @@ export const DEFAULT_LIMITS = { maxRetriesPerStep: 3, totalMaxRetries: 10, maxIt
 export async function triage(request: string, limits = DEFAULT_LIMITS): Promise<string> {
   // A fresh agent and memory per request keeps every request an independent run.
   const agent = new ReActAgent({
-    llm: new OpenAIChatModel("gpt-4o-mini"),
+    llm: new OpenAIChatModel(MODEL),
     tools,
     memory: new UnconstrainedMemory(),
   });

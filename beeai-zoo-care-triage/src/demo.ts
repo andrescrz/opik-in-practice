@@ -8,6 +8,8 @@ if (!process.env.OPENAI_API_KEY) {
   process.exit(1);
 }
 
+// Tracing must start before BeeAI is imported, and only after the env vars above are loaded.
+const { shutdownTracing } = await import("./instrumentation.ts");
 const { triage } = await import("./agent.ts");
 
 const REQUESTS = [
@@ -20,3 +22,6 @@ for (const [i, request] of REQUESTS.entries()) {
   console.log(`\n=== Request ${i + 1} ===\nKeeper: ${request}`);
   console.log(await triage(request));
 }
+
+await shutdownTracing();
+console.log(`\nDone. Open the "${process.env.OPIK_PROJECT_NAME ?? "beeai-zoo-care-triage"}" project in Opik.`);
