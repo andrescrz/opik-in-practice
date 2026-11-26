@@ -19,9 +19,11 @@ console.warn = (...args: unknown[]) => {
 };
 
 const { VoltAgent } = await import("@voltagent/core");
+// Imported after the .env is loaded: the exporter reads its endpoint and project at import time.
+const { observability } = await import("./observability.ts");
 const { host } = await import("./agent.ts");
 
-new VoltAgent({ agents: { host } });
+new VoltAgent({ agents: { host }, observability });
 
 const REQUESTS = [
   "Hi! Do you have a table for 4 on 2026-12-12 at 19:00?",
@@ -40,4 +42,7 @@ for (const [i, request] of REQUESTS.entries()) {
   history.push({ role: "assistant", content: result.text });
   console.log(`Host:  ${result.text}`);
 }
+// shutdown() flushes the batch exporter; without it the last spans never reach Opik.
+await observability.shutdown();
+console.log('\nDone. Open the "voltagent-restaurant-reservations" project in Opik.');
 process.exit(0);
