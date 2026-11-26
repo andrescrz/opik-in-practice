@@ -1,0 +1,25 @@
+{
+  "members": [
+    {
+      "member_id": "M-2041",
+      "name": "Priya Raman",
+      "accounts": [
+        { "account_id": "CHK-2041-01", "type": "checking", "balance_usd": 2418.37 },
+        { "account_id": "SAV-2041-02", "type": "savings", "balance_usd": 9150.0 }
+      ],
+      "cards": [
+        { "card_id": "CARD-7731", "account_id": "CHK-2041-01", "last4": "7731", "status": "active" }
+      ]
+    },
+    {
+      "member_id": "M-3318",
+      "name": "Declan Ortiz",
+      "accounts": [
+        { "account_id": "CHK-3318-01", "type": "checking", "balance_usd": 312.9 }
+      ],
+      "cards": [
+        { "card_id": "CARD-4402", "account_id": "CHK-3318-01", "last4": "4402", "status": "active" }
+      ]
+    }
+  ]
+}

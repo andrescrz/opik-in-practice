@@ -1,0 +1,12 @@
+[
+  { "account_id": "CHK-2041-01", "date": "2026-11-24", "merchant": "Fernhill Grocers", "amount_usd": -64.12 },
+  { "account_id": "CHK-2041-01", "date": "2026-11-23", "merchant": "Harbor Pines Payroll", "amount_usd": 1850.0 },
+  { "account_id": "CHK-2041-01", "date": "2026-11-22", "merchant": "Lumen Streaming", "amount_usd": -14.99 },
+  { "account_id": "CHK-2041-01", "date": "2026-11-21", "merchant": "Quillon Electronics (online)", "amount_usd": -389.0 },
+  { "account_id": "CHK-2041-01", "date": "2026-11-20", "merchant": "Corner Bike Repair", "amount_usd": -45.5 },
+  { "account_id": "SAV-2041-02", "date": "2026-11-15", "merchant": "Transfer from checking", "amount_usd": 500.0 },
+  { "account_id": "CHK-3318-01", "date": "2026-11-25", "merchant": "Tidewater Gas & Go", "amount_usd": -41.3 },
+  { "account_id": "CHK-3318-01", "date": "2026-11-24", "merchant": "Overseas ATM (Lisbon)", "amount_usd": -200.0 },
+  { "account_id": "CHK-3318-01", "date": "2026-11-24", "merchant": "Overseas ATM (Lisbon)", "amount_usd": -200.0 },
+  { "account_id": "CHK-3318-01", "date": "2026-11-22", "merchant": "Maple Row Pharmacy", "amount_usd": -18.75 }
+]
