@@ -4,6 +4,7 @@ import base64
 from pathlib import Path
 
 import os
+import warnings
 
 from dotenv import find_dotenv, load_dotenv
 from pydantic import BaseModel, Field
@@ -21,6 +22,10 @@ from opik.integrations.openai import track_openai  # noqa: E402
 
 HERE = Path(__file__).parent
 MODEL = "gpt-4o-mini"
+
+# Logging a .parse() result makes Opik serialize the response, and pydantic warns once per call
+# that the `parsed` field is not None. The span output is still logged correctly; silence the noise.
+warnings.filterwarnings("ignore", message="Pydantic serializer warnings", category=UserWarning)
 
 # track_openai wraps the client: every completion (including .parse) becomes an llm span
 # nested under the active trace, with token usage and cost. Image input shows up in the span input.

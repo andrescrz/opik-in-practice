@@ -69,15 +69,15 @@ passed. The two failures are the ones you would hope a suite finds:
   here, but it is still a miss, and the suite says so.
 - `label_08_handwritten_postcode.png`: the corrected postcode is missed, as above.
 
-`label_07_handwritten_weight.png` is the interesting pass: the model read the
-handwritten `3.1` rather than the struck-through `2.4` every time, but in one of
-the three runs it garbled the tracking number. The item still passes because the
-policy is two out of three, and the console line `wrong fields: ['tracking_number']`
-next to a `PASS` shows that the flaw was real and only absorbed by the policy.
-Judge-based pass rates move a little between runs, so yours may differ.
+`label_07_handwritten_weight.png` passes: the model read the handwritten `3.1`
+rather than the struck-through `2.4` in all three runs. An earlier run of the same
+code had one run garble that label's tracking number (`NW66209448113`) and the
+item still passed, because the policy is two out of three; the console line
+`wrong fields: [...]` printed next to a `PASS` is how you spot a flaw the policy
+absorbed. Judge-based pass rates move a little between runs, so yours may differ.
 
 The script ends with a per-field exact-match table over all 27 runs: tracking
-number 85%, postcode 89%, and 100% for carrier, service level, weight and
+number 89% (the three smudged runs), postcode 89% (the three uncorrected runs), and 100% for carrier, service level, weight and
 recipient. Carrier and name come back upper-cased from the label's printed
 headers, and the scorer ignores case.
 
@@ -101,6 +101,19 @@ OPIK_TRACK_DISABLE=true uv run pytest
 - Make the smudge in `labels.py` lighter (a blur radius of 4 instead of 9) and find the point where the model starts reading the tracking number again, or starts inventing one.
 - Add a tenth label with two corrections on the same label. Suites deduplicate identical items, so a re-run only adds the new one.
 - Set the suite policy to `runs_per_item: 1`, run it three times, and compare the pass rate drift with the 2-of-3 policy.
+
+## Gotchas we hit
+
+- **Every call prints `UserWarning: Pydantic serializer warnings ... field_name='parsed'`.**
+  `track_openai` also wraps `client.chat.completions.parse`, and logging the
+  parsed response makes pydantic complain that `parsed` is not `None`. The span
+  output is logged correctly; only the noise is wrong. Silence it in `extract.py`:
+  `warnings.filterwarnings("ignore", message="Pydantic serializer warnings", category=UserWarning)`.
+- **`attachment_list` returns nothing when you look at traces named `extract_label`.**
+  Inside `run_tests` the root trace is `evaluation_task`; `extract_label` is a
+  span in it, and `update_current_trace(attachments=...)` puts the image on the
+  root trace. Query attachments with `entity_type="trace"` and the id of the
+  `evaluation_task` trace, with `path=base64(<your Opik API url>)`.
 
 ## How it's put together
 
