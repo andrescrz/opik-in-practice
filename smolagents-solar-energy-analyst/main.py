@@ -27,10 +27,12 @@ other days. Answer in two or three plain sentences.
 
 QUESTIONS = [
     "Which array has been underperforming relative to the sunshine it receives, "
-    "and from roughly what date? Compare each array's kwh per unit of "
-    "irradiance before and after mid-May.",
-    "Which array had an inverter fault burst, and on which dates? Report the "
-    "total faults for that array in the burst window and its average kwh on those days.",
+    "and from roughly what date? Report each array's average kwh per unit of "
+    "irradiance before and after 2025-05-14, and the date the drop starts.",
+    "One array had a burst of inverter faults on several consecutive days, "
+    "against a background of occasional single faults on every array. Which "
+    "array, which dates, how many faults in the burst, and what was its "
+    "average kwh on those days?",
     "Was there any day when every array produced about zero despite good "
     "sunshine? Give the date and the irradiance that day.",
 ]
