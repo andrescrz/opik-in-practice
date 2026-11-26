@@ -3,7 +3,7 @@ import json
 import re
 
 REGEX_RULES = {
-    "EMAIL": re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+"),
+    "EMAIL": re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+"),
     "SSN": re.compile(r"\b\d{3}-\d{2}-\d{4}\b"),
     "PHONE": re.compile(r"(?:\(\d{3}\)\s?|\b\d{3}[-.])\d{3}[-.]\d{4}\b"),
     "ID": re.compile(r"\b(?:MRN|LSE|PCC)-[\d-]+\b"),

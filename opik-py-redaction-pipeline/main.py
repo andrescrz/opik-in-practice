@@ -114,7 +114,7 @@ def redact_document(opik_client: opik.Opik, client: OpenAI, doc: dict) -> dict:
 
     # client.trace() with an explicit id and end_time writes the root of the tree in one message,
     # in the project named by OPIK_PROJECT_NAME. Its output is the final redacted document.
-    opik_client.trace(
+    trace = opik_client.trace(
         id=trace_id,
         name="redact-document",
         start_time=trace_start,
@@ -125,13 +125,25 @@ def redact_document(opik_client: opik.Opik, client: OpenAI, doc: dict) -> dict:
         metadata={"title": doc["title"], "model": MODEL},
     )
 
+    leaks = leaked(text, doc["pii"])
+    # Feedback scores attach numbers to the trace: they show up as columns in the traces table,
+    # can be filtered and sorted, and the reason appears on hover. The first is the auditor's own
+    # confidence (model-reported, measured before the verify step masked what it found); the
+    # second is ground truth, counted against the PII planted in the fictional document.
+    trace.log_feedback_score(
+        name="redaction-confidence", value=confidence, reason="Auditor's confidence the text was safe to publish"
+    )
+    trace.log_feedback_score(
+        name="leaked-pii-count", value=float(len(leaks)), reason=f"Planted PII still in the output: {leaks}"
+    )
+
     return {
         "text": text,
         "regex_counts": counts,
         "llm_masked": masked,
         "verify_masked": extra,
         "confidence": confidence,
-        "leaked": leaked(text, doc["pii"]),
+        "leaked": leaks,
     }
 
 
@@ -151,8 +163,9 @@ def main() -> None:
             f"verify masked {result['verify_masked']} | confidence {result['confidence']:.2f} | "
             f"leaked {len(result['leaked'])} {result['leaked']}"
         )
-    # flush() blocks until the background batch is delivered. A short script exits before the
-    # sender thread runs, so without it the run prints results and Opik stays empty.
+    # flush() blocks until every queued trace, span and score has been delivered. A normal exit
+    # also flushes via an atexit hook, but os._exit(), a kill, a crash or a frozen serverless
+    # worker skips it and the queued batch is lost. Flushing explicitly is what you can rely on.
     opik_client.flush()
 
 
