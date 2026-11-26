@@ -1,0 +1,27 @@
+{
+  "name": "beeai-zoo-care-triage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A BeeAI ReAct agent that triages animal-care requests at a fictional zoo.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.11",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.2"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.147",
+    "beeai-framework": "^0.1.32",
+    "dotenv": "^18.0.10",
+    "zod": "^3.25.76"
+  }
+}

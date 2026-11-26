@@ -1,0 +1,10 @@
+[
+  { "enclosure": "savanna-yard", "date": "2026-11-20", "item": "Replaced loose gate latch on night-house door 2", "status": "closed" },
+  { "enclosure": "savanna-yard", "date": "2026-11-24", "item": "Browse feeder winch inspected, cable fraying noted, replacement ordered", "status": "open" },
+  { "enclosure": "polar-cove", "date": "2026-11-11", "item": "Chiller compressor serviced", "status": "closed" },
+  { "enclosure": "polar-cove", "date": "2026-11-22", "item": "Pool filter bank B pressure sensor flagged intermittently high; cartridges due for replacement", "status": "open" },
+  { "enclosure": "polar-cove", "date": "2026-11-25", "item": "Filter bank A swapped to standby during cartridge check", "status": "open" },
+  { "enclosure": "canopy-ridge", "date": "2026-11-18", "item": "Heat lamp over sleeping platform replaced", "status": "closed" },
+  { "enclosure": "wetland-bank", "date": "2026-11-15", "item": "Water inlet screen cleaned", "status": "closed" },
+  { "enclosure": "kelp-tank", "date": "2026-11-23", "item": "Skimmer pump running loud; vibration under review", "status": "open" }
+]

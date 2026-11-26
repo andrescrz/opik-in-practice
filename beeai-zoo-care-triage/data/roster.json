@@ -1,0 +1,8 @@
+[
+  { "area": "veterinary", "name": "Dr. Imani Okafor", "role": "Staff veterinarian (on call)", "contact": "ext. 4101", "response_target": "15 minutes for any sick or injured animal, 2 hours for routine concerns", "backup": "Dr. Luis Brandt, ext. 4102" },
+  { "area": "hoofstock", "name": "Wren Castellano", "role": "Lead keeper, Savanna and Plains", "contact": "radio ch. 3", "response_target": "10 minutes on site", "backup": "Teodor Marsh, radio ch. 3" },
+  { "area": "aquatics", "name": "Odalys Pike", "role": "Aquatic life-support technician", "contact": "radio ch. 7", "response_target": "5 minutes for alarms, 1 hour for non-urgent", "backup": "Kenji Arai, radio ch. 7" },
+  { "area": "birds", "name": "Sunniva Holt", "role": "Lead keeper, Polar Cove and Aviary", "contact": "radio ch. 5", "response_target": "10 minutes on site", "backup": "Bram Delacroix, radio ch. 5" },
+  { "area": "primates", "name": "Ravi Menon", "role": "Lead keeper, Canopy Trail", "contact": "radio ch. 4", "response_target": "10 minutes on site", "backup": "Isolde Varga, radio ch. 4" },
+  { "area": "facilities", "name": "Hollis Grady", "role": "Enclosure maintenance supervisor", "contact": "ext. 4300", "response_target": "30 minutes for safety issues, next business day otherwise", "backup": "Maintenance desk, ext. 4301" }
+]
