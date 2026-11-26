@@ -1,0 +1,16 @@
+[project]
+name = "openai-py-storybook-illustrations"
+version = "0.1.0"
+description = "Turn storybook scene descriptions into illustrations with gpt-image-1, with the brief versioned in the Opik prompt library."
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.109",
+    "python-dotenv>=1.2.3",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

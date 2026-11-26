@@ -1,0 +1,16 @@
+[
+  {
+    "id": "lantern-hill",
+    "page": 3,
+    "setting": "a mossy hilltop at dusk with a crooked old oak tree",
+    "action": "Pip the hedgehog lifts a glowing paper lantern high so the fireflies can find their way home",
+    "mood": "hopeful and quiet"
+  },
+  {
+    "id": "river-crossing",
+    "page": 7,
+    "setting": "a narrow stream crossed by stepping stones after rain",
+    "action": "Pip balances on a stone while Juniper the heron holds out one long wing like a bridge",
+    "mood": "tense, then relieved"
+  }
+]
