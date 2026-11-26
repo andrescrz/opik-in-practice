@@ -13,8 +13,6 @@ dependencies = [
 [dependency-groups]
 dev = ["pytest>=8"]
 
-[tool.setuptools]
-packages = ["parkguide"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
