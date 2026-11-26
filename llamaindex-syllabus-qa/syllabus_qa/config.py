@@ -1,3 +1,4 @@
+import os
 import pathlib
 
 import dotenv
@@ -7,6 +8,8 @@ DATA_DIR = pathlib.Path(__file__).parents[1] / "data" / "syllabi"
 
 # Walks up from this file to the first .env, so a repo-root .env works too.
 dotenv.load_dotenv(dotenv.find_dotenv())
+# Opik reads this when the first client is created: all traces land in this project, not "Default Project".
+os.environ.setdefault("OPIK_PROJECT_NAME", PROJECT_NAME)
 
 LLM_MODEL = "gpt-4o-mini"
 EMBED_MODEL = "text-embedding-3-small"

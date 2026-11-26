@@ -1,6 +1,6 @@
 import argparse
 
-from . import config, engine, index, pdfgen, questions
+from . import config, engine, index, pdfgen, questions, tracing
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -17,9 +17,11 @@ def main(argv: list[str] | None = None) -> None:
             print(f"wrote {path}")
         return
 
+    tracing.enable()
     query_engine = engine.make_engine(index.build_index())
     asked = [args.question] if args.command == "ask" else questions.DEMO_QUESTIONS
     for question in asked:
         result = engine.ask(query_engine, question)
         print(f"Q: {question}\nA: {result['answer']}")
         print("   from: " + ", ".join(sorted({s["file"] for s in result["sources"]})) + "\n")
+    tracing.flush()
