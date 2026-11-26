@@ -13,9 +13,14 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.125",
+    "@ai-sdk/otel": "^1.0.183",
     "@ai-sdk/svelte": "^5.0.183",
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/sdk-node": "^0.222.0",
     "ai": "^7.0.183",
     "dotenv": "^18.0.5",
+    "opik": "^1.11.14",
+    "opik-vercel": "^2.3.6",
     "zod": "^4.6.7"
   },
   "devDependencies": {

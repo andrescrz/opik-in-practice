@@ -17,6 +17,8 @@ for (let dir = root; ; dir = path.dirname(dir)) {
   if (dir === path.dirname(dir)) break;
 }
 
+const { ensureRule, listTraces, PROJECT } = await import("./opik-rest.mjs");
+
 const PORT = process.env.DEMO_PORT || "4173";
 const BASE = `http://localhost:${PORT}`;
 
@@ -49,6 +51,10 @@ const conversations = [
     ],
   },
 ];
+
+// The online-evaluation rule goes in BEFORE any traffic: Opik only scores traces that arrive after it is enabled.
+const rule = await ensureRule();
+console.log(`Online rule answer_relevance ${rule.created ? "created" : "already present"} (${rule.id}).`);
 
 console.log(`Starting SvelteKit dev server on port ${PORT}...`);
 const server = spawn(
@@ -126,11 +132,29 @@ try {
     }
     console.log();
   }
-  console.log("Done.");
+  // The OTel batch processor and the Opik client both buffer; give them time to ship the last spans.
+  console.log("Waiting for the exporter to flush...");
+  await sleep(8_000);
 } finally {
   try {
     process.kill(-server.pid, "SIGTERM");
   } catch {
     /* already gone */
   }
+}
+
+// The judge runs server-side after ingestion, so poll until every trace carries its answer_relevance score.
+const expected = conversations.reduce((n, c) => n + c.turns.length, 0);
+console.log(`\nWaiting for ${expected} traces in "${PROJECT}" to be scored...`);
+let traces = [];
+for (let i = 0; i < 40; i++) {
+  // Opik also records the judge's own runs as "online_evaluation" traces in this project; skip those.
+  traces = (await listTraces()).filter((t) => t.name === "garden-chat-turn");
+  const scored = traces.filter((t) => t.feedback_scores?.some((s) => s.name === "answer_relevance"));
+  if (traces.length >= expected && scored.length === traces.length) break;
+  await sleep(5_000);
+}
+for (const t of traces) {
+  const score = t.feedback_scores?.find((s) => s.name === "answer_relevance");
+  console.log(`  ${t.name}  thread=${(t.thread_id ?? "-").slice(0, 8)}  answer_relevance=${score?.value ?? "pending"}`);
 }
