@@ -1,0 +1,28 @@
+{
+  "name": "Larkspur Yard",
+  "tagline": "A converted print works with 60 desks, five meeting rooms and a very loud espresso machine.",
+  "hours": "Members 07:00-22:00 daily. Day-pass guests 08:00-19:00, Monday to Friday.",
+  "desks": [
+    {"type": "hot desk", "price": "EUR 18 per day or EUR 190 per month", "notes": "First come, first served; book a day ahead to guarantee a seat."},
+    {"type": "fixed desk", "price": "EUR 320 per month", "notes": "Your own desk and a lockable pedestal. One month minimum."},
+    {"type": "quiet-floor desk", "price": "EUR 24 per day", "notes": "Third floor only. No calls, no keyboard clatter; bookable by the day."}
+  ],
+  "rooms": [
+    {"name": "Kiln", "seats": 4, "price": "EUR 15 per hour", "kit": "wall screen, whiteboard"},
+    {"name": "Press Room", "seats": 8, "price": "EUR 28 per hour", "kit": "projector, conference phone"},
+    {"name": "The Loft", "seats": 16, "price": "EUR 55 per hour", "kit": "projector, video-call camera, catering hatch"}
+  ],
+  "booking": [
+    "Desks and rooms are booked in the Larkspur app or by asking the front desk.",
+    "Rooms can be booked up to 30 days ahead, in 30-minute blocks.",
+    "Cancel a room at least 24 hours ahead for a full credit; later cancellations are charged at 50%.",
+    "Members get 4 free room hours per month; unused hours do not roll over."
+  ],
+  "rules": [
+    "Phone calls and video calls happen in the call booths or meeting rooms, never on the open floor.",
+    "Food is fine at the kitchen tables; strong-smelling hot food (fish, curry) is kept to the ground-floor kitchen.",
+    "Bicycles live in the yard rack. Folding bikes may come upstairs.",
+    "Guests must be signed in at the front desk; members may sign in up to three guests a day.",
+    "Quiet hours on the third floor run all day."
+  ]
+}
