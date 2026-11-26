@@ -1,0 +1,28 @@
+{
+  "name": "temporal-ts-grant-review",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Durable grant-application review on Temporal + OpenAI, traced across client and worker with Opik",
+  "engines": { "node": ">=20.3.0" },
+  "scripts": {
+    "demo": "tsx scripts/demo.ts",
+    "worker": "tsx src/worker.ts",
+    "client": "tsx src/client.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@temporalio/activity": "^1.13.0",
+    "@temporalio/client": "^1.13.0",
+    "@temporalio/worker": "^1.13.0",
+    "@temporalio/workflow": "^1.13.0",
+    "dotenv": "^17.0.0",
+    "openai": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}
