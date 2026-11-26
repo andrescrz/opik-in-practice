@@ -7,6 +7,8 @@ from dataclasses import dataclass
 class Scenario:
     session_id: str
     turns: list[str]
+    rating: float
+    rating_reason: str
 
 
 SCENARIOS = [
@@ -17,6 +19,8 @@ SCENARIOS = [
             "Hot desk sounds right. Can I just turn up on Tuesday, and what time do you open for day-pass people?",
             "Perfect. And can I take a video call from my desk?",
         ],
+        1.0,
+        "Guest got hours, price and the call-booth rule, and booked.",
     ),
     Scenario(
         "board-meeting-room",
@@ -25,6 +29,8 @@ SCENARIOS = [
             "What does that cost, and what's in the room?",
             "Something came up, and we might cancel the evening before. Do we lose the money?",
         ],
+        1.0,
+        "Guest got the right room, price and the 24-hour cancellation rule.",
     ),
     Scenario(
         "guest-with-dog",
@@ -32,5 +38,7 @@ SCENARIOS = [
             "Can I bring my dog to work on Mondays?",
             "OK. Is there somewhere nearby to park a van overnight, then?",
         ],
+        0.0,
+        "Neither dogs nor parking are covered; guest left without an answer.",
     ),
 ]

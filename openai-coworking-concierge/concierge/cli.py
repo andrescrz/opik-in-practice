@@ -7,12 +7,14 @@ import opik
 
 from concierge.config import load_env, make_client
 from concierge.demo import SCENARIOS
+from concierge.feedback import log_guest_ratings
 from concierge.knowledge import load_space
 from concierge.prompts import build_system_prompt
 from concierge.session import Session
 
 
 def run_demo(client, system_prompt: str) -> None:
+    ratings = []
     for scenario in SCENARIOS:
         print(f"\n=== {scenario.session_id} ===")
         session = Session(client, system_prompt, scenario.session_id)
@@ -20,6 +22,12 @@ def run_demo(client, system_prompt: str) -> None:
             print(f"\nGuest: {turn}")
             print(f"Concierge: {session.ask(turn)}")
             print(f"  [{session.last_usage.total_tokens} tokens]")
+        ratings.append(
+            (session.last_trace_id, scenario.rating, scenario.rating_reason)
+        )
+
+    log_guest_ratings(ratings)
+    print(f"\nLogged guest-satisfaction on {len(ratings)} conversations")
 
 
 def run_chat(client, system_prompt: str) -> None:

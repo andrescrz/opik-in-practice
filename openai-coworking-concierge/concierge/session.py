@@ -28,5 +28,7 @@ class Session:
         # thread_id is what groups the turns of one guest into a single
         # conversation in Opik's Threads tab; without it each turn is an orphan trace.
         opik_context.update_current_trace(thread_id=self.session_id)
-        self.last_trace_id = opik_context.get_current_trace_data().id
+        # With tracking disabled (e.g. unit tests) there is no current trace.
+        trace = opik_context.get_current_trace_data()
+        self.last_trace_id = trace.id if trace else None
         return reply
