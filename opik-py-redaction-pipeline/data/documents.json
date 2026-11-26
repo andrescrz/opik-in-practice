@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tenant-letter",
+    "title": "Tenant complaint letter",
+    "text": "Dear Mr. Castellanos,\n\nI am writing about the heating in my apartment at 218 Alder Court, Unit 4B, Marrow Falls. Since November 3 the radiator has been cold. My neighbour Priya Venkataraman in 4C has the same problem. You can reach me at tessa.brightwater@example.test or on (555) 014-2290 after 6pm. My lease reference is LSE-90417.\n\nI work nights at Harbourlight Bakery, so please leave any notice with the concierge rather than calling before noon.\n\nSincerely,\nTessa Brightwater",
+    "pii": ["Castellanos", "218 Alder Court", "Unit 4B", "Priya Venkataraman", "tessa.brightwater@example.test", "(555) 014-2290", "LSE-90417", "Harbourlight Bakery", "Tessa Brightwater"]
+  },
+  {
+    "id": "clinic-intake",
+    "title": "Clinic intake note",
+    "text": "Intake note, Fernside Family Clinic. Patient: Okonkwo, Daniel A., DOB 03/14/1987, MRN-482113. Daniel reports recurring migraines since starting at Quillon Logistics in March. Lives with his sister Adaeze on 77 Linden Row. Emergency contact: Adaeze Okonkwo, 555-019-7731. SSN on file 000-12-3456 (fictional). Plan: neurology referral, follow-up with Dr. Imogen Strand in six weeks.",
+    "pii": ["Okonkwo, Daniel A.", "Daniel", "03/14/1987", "MRN-482113", "Quillon Logistics", "Adaeze Okonkwo", "Adaeze", "77 Linden Row", "555-019-7731", "000-12-3456", "Imogen Strand"]
+  },
+  {
+    "id": "school-incident",
+    "title": "Community centre incident report",
+    "text": "Incident report, Pinecrest Community Centre. On Saturday a volunteer, Marguerite Oyelaran, slipped near the pool entrance. She declined an ambulance and asked us to email her husband at j.oyelaran@example.test instead. Her membership number is PCC-3381-07. Witness: the lifeguard on duty, Tomasz Wieczorek, who lives two streets from the centre at 9 Orchard Mews. Mrs. Oyelaran said she would see her own GP, the Birchgate Surgery, on Monday.",
+    "pii": ["Marguerite Oyelaran", "Mrs. Oyelaran", "j.oyelaran@example.test", "PCC-3381-07", "Tomasz Wieczorek", "9 Orchard Mews", "Birchgate Surgery"]
+  }
+]
