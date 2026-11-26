@@ -14,6 +14,17 @@ fi
 : "${OPENAI_API_KEY:?Set OPENAI_API_KEY (shell env or repo-root .env)}"
 
 export N8N_PORT="${N8N_PORT:-5678}"
+
+# Where n8n sends its spans. A local Opik on the host is "localhost" to you but
+# "host.docker.internal" to the container. Opik Cloud needs the API key header;
+# a local Opik needs none.
+OPIK_URL="${OPIK_URL_OVERRIDE:-http://localhost:5173/api/}"
+OPIK_URL="${OPIK_URL%/}"
+export OPIK_OTLP_ENDPOINT="$(echo "$OPIK_URL" | sed -E 's#//(localhost|127\.0\.0\.1)#//host.docker.internal#')/v1/private/otel"
+OPIK_OTLP_HEADERS="Comet-Workspace=${OPIK_WORKSPACE:-default},projectName=n8n-food-bank-volunteer-screening"
+[ -n "${OPIK_API_KEY:-}" ] && OPIK_OTLP_HEADERS="Authorization=${OPIK_API_KEY},${OPIK_OTLP_HEADERS}"
+export OPIK_OTLP_HEADERS
+echo "==> Spans go to ${OPIK_OTLP_ENDPOINT}"
 N8N_URL="http://localhost:${N8N_PORT}"
 OWNER_EMAIL="coordinator@riverbend.example"
 OWNER_PASSWORD="Riverbend-demo-1"
@@ -21,7 +32,12 @@ BROWSER_ID="setup-script"
 
 json() { python3 -c "import json,sys; d=json.load(sys.stdin); print(d$1)"; }
 
-echo "==> Starting n8n on ${N8N_URL}"
+# Always start from an empty n8n volume. Deleting a workflow through the API
+# and re-importing it can leave the webhook bound to the old copy and its
+# deleted credential ("Credential with ID ... does not exist"), so a re-run
+# rebuilds the instance instead of patching it.
+echo "==> Starting a fresh n8n on ${N8N_URL}"
+docker compose down -v >/dev/null 2>&1 || true
 docker compose up -d --build
 
 echo -n "==> Waiting for n8n"
@@ -46,20 +62,13 @@ done
 [ -n "$AUTHED" ] || { echo "could not authenticate against n8n"; exit 1; }
 
 echo "==> Minting an API key"
-API_KEY=$(rest POST /api-keys '{"label":"setup-'"$(date +%s)"'","expiresAt":null,"scopes":["workflow:create","workflow:read","workflow:delete","workflow:list","workflow:activate","credential:create","credential:delete"]}' | json "['data']['rawApiKey']")
+API_KEY=$(rest POST /api-keys '{"label":"setup-'"$(date +%s)"'","expiresAt":null,"scopes":["workflow:create","workflow:activate","credential:create"]}' | json "['data']['rawApiKey']")
 api() { curl -sf -X "$1" "$N8N_URL/api/v1$2" -H "X-N8N-API-KEY: $API_KEY" -H 'Content-Type: application/json' ${3:+-d "$3"}; }
 
-if [ -f .n8n-credential-id ]; then
-  api DELETE "/credentials/$(cat .n8n-credential-id)" >/dev/null 2>&1 || true
-fi
 echo "==> Creating the OpenAI credential (from the environment, never from a file)"
 CRED_ID=$(api POST /credentials "{\"name\":\"OpenAI (volunteer screening)\",\"type\":\"openAiApi\",\"data\":{\"apiKey\":\"$OPENAI_API_KEY\"}}" | json "['id']")
-echo "$CRED_ID" > .n8n-credential-id
 
-echo "==> Replacing any previous copy of the workflow"
-api GET "/workflows?name=Volunteer%20screening" \
-  | python3 -c "import json,sys; [print(w['id']) for w in json.load(sys.stdin).get('data',[])]" \
-  | while read -r wid; do api DELETE "/workflows/$wid" >/dev/null; done
+echo "==> Importing and activating workflow/volunteer-screening.json"
 WF_BODY=$(sed "s/__OPENAI_CREDENTIAL_ID__/$CRED_ID/" workflow/volunteer-screening.json)
 WF_ID=$(api POST /workflows "$WF_BODY" | json "['id']")
 api POST "/workflows/$WF_ID/activate" >/dev/null

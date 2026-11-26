@@ -6,9 +6,17 @@ services:
     ports:
       - "${N8N_PORT:-5678}:5678"
     environment:
+      # Opik's OTLP endpoint, as seen from inside the container. setup.sh derives
+      # both values from OPIK_URL_OVERRIDE / OPIK_WORKSPACE / OPIK_API_KEY.
+      # The projectName header is what puts the traces in this example's project.
+      OTEL_EXPORTER_OTLP_ENDPOINT: "${OPIK_OTLP_ENDPOINT}"
+      OTEL_EXPORTER_OTLP_HEADERS: "${OPIK_OTLP_HEADERS}"
+      OTEL_SERVICE_NAME: "n8n-food-bank-volunteer-screening"
       N8N_SECURE_COOKIE: "false"       # log in over plain http://localhost
       N8N_RUNNERS_ENABLED: "true"
       N8N_DIAGNOSTICS_ENABLED: "false"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # reach a local Opik on Linux too
     volumes:
       - n8n_data:/home/node/.n8n
 

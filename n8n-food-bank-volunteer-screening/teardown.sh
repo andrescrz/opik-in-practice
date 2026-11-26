@@ -3,4 +3,3 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 docker compose down -v
-rm -f .n8n-credential-id
