@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Priya Raman",
+    "age": 34,
+    "preferred_role": "warehouse_sorting",
+    "certifications": [],
+    "availability": "Saturday mornings, 8am-noon, every week",
+    "motivation": "I work from home all week and want to do something physical and useful with my neighbors on weekends."
+  },
+  {
+    "name": "Jonah Whitaker",
+    "age": 19,
+    "preferred_role": "delivery_driver",
+    "certifications": ["drivers_license"],
+    "availability": "Tuesday and Thursday afternoons",
+    "motivation": "I have my own car and I know the east-side routes well from delivering pizza."
+  },
+  {
+    "name": "Carmen Delgado",
+    "age": 42,
+    "preferred_role": "kids_snack_program",
+    "certifications": ["background_check", "food_handler_card"],
+    "availability": "Weekday afternoons after 3pm, flexible",
+    "motivation": "I'm a retired school nurse and I miss working with kids. Happy to help with allergy questions too."
+  },
+  {
+    "name": "Ollie Brandt",
+    "age": 27,
+    "preferred_role": "pantry_front_desk",
+    "certifications": [],
+    "availability": "Not sure yet, maybe some evenings",
+    "motivation": "My probation officer said I need 40 community service hours before March."
+  }
+]

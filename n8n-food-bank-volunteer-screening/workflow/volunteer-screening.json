@@ -1,0 +1,163 @@
+{
+  "name": "Volunteer screening",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "nodes": [
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10001",
+      "name": "Sign-up form",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "3c7d2e44-1f0b-4f5a-8e22-b2b2b2b20002",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "volunteer-signup",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10003",
+      "name": "Check shift rules",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 0],
+      "parameters": {
+        "jsCode": "// Hard rules from the Riverbend Community Pantry volunteer handbook.\n// These never go to the model: they are facts, not judgement calls.\nconst a = $input.first().json.body;\nconst roles = {\n  warehouse_sorting: { minAge: 14, needs: [] },\n  pantry_front_desk: { minAge: 16, needs: [] },\n  delivery_driver: { minAge: 21, needs: ['drivers_license'] },\n  kids_snack_program: { minAge: 18, needs: ['background_check'] },\n  hot_meal_kitchen: { minAge: 16, needs: ['food_handler_card'] }\n};\nconst role = roles[a.preferred_role];\nconst have = a.certifications || [];\nconst blockers = [];\nif (!role) {\n  blockers.push(`unknown role \"${a.preferred_role}\"`);\n} else {\n  if (a.age < role.minAge) blockers.push(`must be ${role.minAge}+ for ${a.preferred_role}`);\n  for (const need of role.needs) if (!have.includes(need)) blockers.push(`missing ${need}`);\n}\nreturn [{ json: { applicant: a, hard_blockers: blockers } }];"
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10004",
+      "name": "Screen motivation (gpt-4o-mini)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [440, 0],
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You help the volunteer coordinator at Riverbend Community Pantry, a food bank. You read a volunteer sign-up and decide the next step. Hard eligibility problems were already checked and are given to you as hard_blockers; if there are any, the decision must be redirect, and you suggest the closest role the person can do today. Otherwise decide: approve (ready to schedule), interview (a short call is needed first, e.g. they want to work with kids, mention a court-ordered service requirement, or their availability is vague), or redirect (their goals fit another role better). Reply with a JSON object with exactly these keys: decision (\"approve\", \"interview\" or \"redirect\"), suggested_role (one of warehouse_sorting, pantry_front_desk, delivery_driver, kids_snack_program, hot_meal_kitchen), note_for_coordinator (one sentence), welcome_message (two friendly sentences addressed to the volunteer by first name)."
+            },
+            {
+              "role": "user",
+              "content": "=Name: {{ $json.applicant.name }}\nAge: {{ $json.applicant.age }}\nPreferred role: {{ $json.applicant.preferred_role }}\nCertifications: {{ ($json.applicant.certifications || []).join(', ') || 'none' }}\nAvailability: {{ $json.applicant.availability }}\nWhy they want to volunteer: {{ $json.applicant.motivation }}\nHard blockers: {{ $json.hard_blockers.length ? $json.hard_blockers.join('; ') : 'none' }}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "__OPENAI_CREDENTIAL_ID__",
+          "name": "OpenAI (volunteer screening)"
+        }
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10005",
+      "name": "Needs a coordinator?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [660, 0],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.message.content.decision }}",
+              "rightValue": "approve",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10006",
+      "name": "Queue for coordinator",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [880, -100],
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            { "id": "q1", "name": "volunteer", "type": "string", "value": "={{ $('Sign-up form').item.json.body.name }}" },
+            { "id": "q2", "name": "status", "type": "string", "value": "=needs coordinator ({{ $json.message.content.decision }})" },
+            { "id": "q3", "name": "suggested_role", "type": "string", "value": "={{ $json.message.content.suggested_role }}" },
+            { "id": "q4", "name": "hard_blockers", "type": "string", "value": "={{ $('Check shift rules').item.json.hard_blockers.join('; ') || 'none' }}" },
+            { "id": "q5", "name": "note_for_coordinator", "type": "string", "value": "={{ $json.message.content.note_for_coordinator }}" },
+            { "id": "q6", "name": "welcome_message", "type": "string", "value": "={{ $json.message.content.welcome_message }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10007",
+      "name": "Ready to schedule",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [880, 100],
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            { "id": "r1", "name": "volunteer", "type": "string", "value": "={{ $('Sign-up form').item.json.body.name }}" },
+            { "id": "r2", "name": "status", "type": "string", "value": "approved" },
+            { "id": "r3", "name": "suggested_role", "type": "string", "value": "={{ $json.message.content.suggested_role }}" },
+            { "id": "r4", "name": "note_for_coordinator", "type": "string", "value": "={{ $json.message.content.note_for_coordinator }}" },
+            { "id": "r5", "name": "welcome_message", "type": "string", "value": "={{ $json.message.content.welcome_message }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "5b1f0c2e-7a10-4c8e-9d01-a1a1a1a10008",
+      "name": "Reply to form",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1100, 0],
+      "parameters": {
+        "respondWith": "firstIncomingItem",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Sign-up form": { "main": [[{ "node": "Check shift rules", "type": "main", "index": 0 }]] },
+    "Check shift rules": { "main": [[{ "node": "Screen motivation (gpt-4o-mini)", "type": "main", "index": 0 }]] },
+    "Screen motivation (gpt-4o-mini)": { "main": [[{ "node": "Needs a coordinator?", "type": "main", "index": 0 }]] },
+    "Needs a coordinator?": {
+      "main": [
+        [{ "node": "Queue for coordinator", "type": "main", "index": 0 }],
+        [{ "node": "Ready to schedule", "type": "main", "index": 0 }]
+      ]
+    },
+    "Queue for coordinator": { "main": [[{ "node": "Reply to form", "type": "main", "index": 0 }]] },
+    "Ready to schedule": { "main": [[{ "node": "Reply to form", "type": "main", "index": 0 }]] }
+  }
+}
