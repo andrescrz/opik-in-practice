@@ -1,0 +1,386 @@
+[
+  {
+    "id": "ACB-001",
+    "title": "Salt Road Almanac",
+    "author": "Wen Aldaine",
+    "genre": "fiction",
+    "summary": "A cartographer's daughter follows a failing salt caravan route across a drying inland sea.",
+    "tags": [
+      "slow",
+      "atmospheric",
+      "travel",
+      "family"
+    ],
+    "pages": 412,
+    "year": 2019,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-002",
+    "title": "The Lantern Keeper's Ledger",
+    "author": "Odile Marchetti",
+    "genre": "mystery",
+    "summary": "A retired lighthouse clerk finds forty years of tide tables hiding a quiet crime.",
+    "tags": [
+      "cozy",
+      "coastal",
+      "puzzle",
+      "short chapters"
+    ],
+    "pages": 288,
+    "year": 2021,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-003",
+    "title": "Quiet Machines",
+    "author": "Tomas Ekwueme",
+    "genre": "science fiction",
+    "summary": "Maintenance robots on a generation ship begin leaving each other small notes.",
+    "tags": [
+      "gentle",
+      "robots",
+      "hopeful",
+      "short"
+    ],
+    "pages": 236,
+    "year": 2022,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-004",
+    "title": "Hollow Orchard",
+    "author": "Ingrid Valtonen",
+    "genre": "horror",
+    "summary": "A family inherits an apple orchard where nothing rots and nothing is ever picked.",
+    "tags": [
+      "creepy",
+      "rural",
+      "slow burn",
+      "dread"
+    ],
+    "pages": 340,
+    "year": 2018,
+    "copies_available": 0
+  },
+  {
+    "id": "ACB-005",
+    "title": "Bread and Other Arguments",
+    "author": "Priya Ramaswamy",
+    "genre": "memoir",
+    "summary": "A baker's year of feuds, rising dough and reconciliations in a one-street town.",
+    "tags": [
+      "funny",
+      "food",
+      "warm",
+      "community"
+    ],
+    "pages": 264,
+    "year": 2020,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-006",
+    "title": "The Long Thaw",
+    "author": "Henrik Sallow",
+    "genre": "nonfiction",
+    "summary": "How a Greenland village rebuilt its fishing economy as the ice retreated.",
+    "tags": [
+      "climate",
+      "reporting",
+      "hopeful",
+      "travel"
+    ],
+    "pages": 372,
+    "year": 2023,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-007",
+    "title": "A Small Theory of Tides",
+    "author": "Marguerite Osei",
+    "genre": "fiction",
+    "summary": "Two sisters scatter their mother's ashes and argue about physics instead of grief.",
+    "tags": [
+      "emotional",
+      "sisters",
+      "coastal",
+      "literary"
+    ],
+    "pages": 198,
+    "year": 2021,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-008",
+    "title": "Cinder and Ledger",
+    "author": "Dara Kowalczyk",
+    "genre": "fantasy",
+    "summary": "An accountant at a dragon-run bank discovers the books don't balance.",
+    "tags": [
+      "funny",
+      "fast",
+      "heist",
+      "dragons"
+    ],
+    "pages": 455,
+    "year": 2020,
+    "copies_available": 0
+  },
+  {
+    "id": "ACB-009",
+    "title": "Night Bus to Calder",
+    "author": "Rafael Quinteros",
+    "genre": "thriller",
+    "summary": "One bus, eleven passengers, and a driver who refuses to stop at the scheduled station.",
+    "tags": [
+      "fast",
+      "tense",
+      "short chapters",
+      "contained"
+    ],
+    "pages": 301,
+    "year": 2022,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-010",
+    "title": "The Cartographer of Small Rooms",
+    "author": "Yuki Brandvold",
+    "genre": "fiction",
+    "summary": "A woman maps the apartments of her late neighbours and learns who they were.",
+    "tags": [
+      "gentle",
+      "quiet",
+      "urban",
+      "character study"
+    ],
+    "pages": 224,
+    "year": 2019,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-011",
+    "title": "Field Notes on Moss",
+    "author": "Aoife Brennan",
+    "genre": "nonfiction",
+    "summary": "A botanist's lyrical year of kneeling in damp places and paying attention.",
+    "tags": [
+      "nature",
+      "slow",
+      "lyrical",
+      "short"
+    ],
+    "pages": 176,
+    "year": 2022,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-012",
+    "title": "The Seventh Mirror",
+    "author": "Casimir Lowe",
+    "genre": "fantasy",
+    "summary": "A glassblower's apprentice must forge the one mirror that shows the truth.",
+    "tags": [
+      "epic",
+      "magic",
+      "coming of age",
+      "long"
+    ],
+    "pages": 612,
+    "year": 2017,
+    "copies_available": 0
+  },
+  {
+    "id": "ACB-013",
+    "title": "Deadline at Fenwick Pier",
+    "author": "Naomi Teller",
+    "genre": "mystery",
+    "summary": "A harbour newspaper editor races a storm and a rival to name a murderer.",
+    "tags": [
+      "cozy",
+      "coastal",
+      "fast",
+      "puzzle"
+    ],
+    "pages": 318,
+    "year": 2023,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-014",
+    "title": "Letters to the Orbital Garden",
+    "author": "Sunil Akhtar",
+    "genre": "science fiction",
+    "summary": "A botanist on a station writes to the plants she can no longer visit.",
+    "tags": [
+      "gentle",
+      "epistolary",
+      "hopeful",
+      "short"
+    ],
+    "pages": 212,
+    "year": 2021,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-015",
+    "title": "Ghost Season",
+    "author": "Beatriz Nunes",
+    "genre": "horror",
+    "summary": "A tourist town survives winter by ignoring what walks the beach at dusk.",
+    "tags": [
+      "creepy",
+      "coastal",
+      "atmospheric",
+      "short chapters"
+    ],
+    "pages": 276,
+    "year": 2023,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-016",
+    "title": "How to Lose a Kingdom Politely",
+    "author": "Edmund Farrow",
+    "genre": "fantasy",
+    "summary": "A deposed queen runs a seaside bed and breakfast while plotting nothing at all.",
+    "tags": [
+      "funny",
+      "cozy",
+      "royalty",
+      "gentle"
+    ],
+    "pages": 298,
+    "year": 2021,
+    "copies_available": 0
+  },
+  {
+    "id": "ACB-017",
+    "title": "The Quiet Arithmetic of Rain",
+    "author": "Leila Haddad",
+    "genre": "fiction",
+    "summary": "A retired mathematician tutors a teenager and rediscovers why she loved numbers.",
+    "tags": [
+      "gentle",
+      "friendship",
+      "quiet",
+      "literary"
+    ],
+    "pages": 251,
+    "year": 2020,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-018",
+    "title": "Fifty Rivers",
+    "author": "Marcus Oyelaran",
+    "genre": "nonfiction",
+    "summary": "A canoeist's attempt to paddle one river in every county of a single year.",
+    "tags": [
+      "travel",
+      "adventure",
+      "funny",
+      "nature"
+    ],
+    "pages": 389,
+    "year": 2019,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-019",
+    "title": "The Cold Room",
+    "author": "Greta Lindqvist",
+    "genre": "thriller",
+    "summary": "A forensic archivist finds her own handwriting on a case file from 1987.",
+    "tags": [
+      "tense",
+      "puzzle",
+      "dark",
+      "fast"
+    ],
+    "pages": 347,
+    "year": 2022,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-020",
+    "title": "Small Gods of the Laundromat",
+    "author": "Tamsin Okoro",
+    "genre": "fiction",
+    "summary": "The patron saints of lost socks hold a meeting in an all-night laundromat.",
+    "tags": [
+      "funny",
+      "magical realism",
+      "urban",
+      "short"
+    ],
+    "pages": 203,
+    "year": 2023,
+    "copies_available": 0
+  },
+  {
+    "id": "ACB-021",
+    "title": "The Weight of Harbor Light",
+    "author": "Ansel Moreau",
+    "genre": "historical fiction",
+    "summary": "A 1910s lighthouse keeper's wife keeps the lamp lit through a winter of fever.",
+    "tags": [
+      "coastal",
+      "emotional",
+      "slow",
+      "atmospheric"
+    ],
+    "pages": 366,
+    "year": 2018,
+    "copies_available": 3
+  },
+  {
+    "id": "ACB-022",
+    "title": "Everything the Tide Left",
+    "author": "Rosalind Achebe",
+    "genre": "mystery",
+    "summary": "A beachcomber's finds on one shoreline form a map to a decades-old disappearance.",
+    "tags": [
+      "coastal",
+      "puzzle",
+      "atmospheric",
+      "quiet"
+    ],
+    "pages": 309,
+    "year": 2020,
+    "copies_available": 2
+  },
+  {
+    "id": "ACB-023",
+    "title": "Pocket Guide to Impossible Gardens",
+    "author": "Ilse Brandt",
+    "genre": "nonfiction",
+    "summary": "Short essays on gardens planted in deserts, rooftops, prisons and orbit.",
+    "tags": [
+      "short",
+      "nature",
+      "hopeful",
+      "essays"
+    ],
+    "pages": 144,
+    "year": 2021,
+    "copies_available": 1
+  },
+  {
+    "id": "ACB-024",
+    "title": "Rust and Starlight",
+    "author": "Jun Park",
+    "genre": "science fiction",
+    "summary": "A salvage crew's last contract is a derelict ship that is still singing.",
+    "tags": [
+      "fast",
+      "atmospheric",
+      "crew",
+      "adventure"
+    ],
+    "pages": 428,
+    "year": 2020,
+    "copies_available": 0
+  }
+]
