@@ -23,8 +23,8 @@ if (process.env.OPIK_API_KEY) headers.Authorization = process.env.OPIK_API_KEY;
 const beeAI = new BeeAIInstrumentation();
 
 // The instrumentation puts the model name on the LLM "start" span but token usage on the "success" span, and never
-// reports the provider. Opik computes cost only when one span carries usage + provider + model, so every
-// chat span is stamped with all three identifiers; without this the usage shows up but cost stays null.
+// reports the provider. Opik computes cost only when a span carries usage + provider + model, so every chat span
+// gets gen_ai.system and llm.model_name; without this usage shows up but cost stays null.
 const stampModel: SpanProcessor = {
   onStart(span: Span) {
     if (span.name.startsWith("backend.openai.chat")) {

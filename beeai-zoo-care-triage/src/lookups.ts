@@ -30,3 +30,9 @@ export function lookupMaintenance(enclosure: string): MaintenanceEntry[] | { err
   const entries = maintenance.filter((m) => m.enclosure === key).sort((a, b) => b.date.localeCompare(a.date));
   return entries.length ? entries : { error: `No maintenance log for "${enclosure}". Known enclosures: ${[...new Set(maintenance.map((m) => m.enclosure))].join(", ")}.` };
 }
+
+// True when the "Call:" line of a triage answer names someone who is actually on the roster.
+export function namesRosterPerson(answer: string): boolean {
+  const line = answer.split("\n").find((l) => l.startsWith("Call:"));
+  return !!line && roster.some((r) => line.includes(r.name));
+}

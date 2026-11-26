@@ -11,6 +11,7 @@ if (!process.env.OPENAI_API_KEY) {
 // Tracing must start before BeeAI is imported, and only after the env vars above are loaded.
 const { shutdownTracing } = await import("./instrumentation.ts");
 const { triage } = await import("./agent.ts");
+const { namesRosterPerson } = await import("./lookups.ts");
 
 const REQUESTS = [
   "Juniper the giraffe hasn't touched her morning browse and is standing by the fence.",
@@ -20,7 +21,9 @@ const REQUESTS = [
 
 for (const [i, request] of REQUESTS.entries()) {
   console.log(`\n=== Request ${i + 1} ===\nKeeper: ${request}`);
-  console.log(await triage(request));
+  const answer = await triage(request);
+  console.log(answer);
+  console.log(`(named person is on the roster: ${namesRosterPerson(answer)})`);
 }
 
 await shutdownTracing();
