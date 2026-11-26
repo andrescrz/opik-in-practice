@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+uv.lock
+compiled/
+opik_test_suite_reports/
