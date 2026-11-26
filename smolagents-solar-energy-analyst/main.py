@@ -6,6 +6,8 @@ from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv(usecwd=False))  # walks up from this file to the first .env
 
+from tracing import PROJECT_NAME, setup_tracing  # noqa: E402
+
 from smolagents import CodeAgent, OpenAIServerModel  # noqa: E402
 
 CSV_PATH = Path(__file__).parent / "data" / "solar_farm.csv"
@@ -46,11 +48,16 @@ def build_agent() -> CodeAgent:
 
 
 def main() -> None:
+    provider = setup_tracing()
     agent = build_agent()
     for i, question in enumerate(QUESTIONS, 1):
         print(f"\n{'=' * 72}\nQuestion {i}: {question}\n{'=' * 72}")
         answer = agent.run(BRIEFING + "\nQuestion: " + question)
         print(f"\nAnswer {i}: {answer}")
+
+    # Flush and stop the exporter so the last spans reach Opik before the process exits.
+    provider.shutdown()
+    print(f"\nDone. Open the '{PROJECT_NAME}' project in Opik: one trace per question.")
 
 
 if __name__ == "__main__":
