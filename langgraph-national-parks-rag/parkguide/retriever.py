@@ -2,6 +2,8 @@ import math
 import re
 from collections import Counter
 
+import opik
+
 from .corpus import Section
 
 STOPWORDS = {
@@ -40,6 +42,9 @@ class KeywordRetriever:
                 total += self.idf[term] * tf * (self.k1 + 1) / norm
         return total
 
+    # A named tool span under the retrieve node: its input is the question and its output
+    # the ranked sections, so a wrong answer can be traced to a retrieval miss in the UI.
+    @opik.track(type="tool", name="search_guide")
     def search(self, question: str, k: int = 4) -> list[Section]:
         terms = tokenize(question)
         ranked = sorted(range(len(self.sections)), key=lambda i: self.score(terms, i), reverse=True)

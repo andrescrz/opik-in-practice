@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "langchain-openai>=1.0",
     "langgraph>=1.0",
+    "opik>=2.3.5",
     "python-dotenv>=1.0",
 ]
 
