@@ -1,6 +1,6 @@
 import argparse
 
-from . import config, engine, index, pdfgen, questions, tracing
+from . import config, engine, index, pdfgen, questions, suite, tracing
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -10,6 +10,7 @@ def main(argv: list[str] | None = None) -> None:
     ask_p = sub.add_parser("ask", help="answer one question")
     ask_p.add_argument("question")
     sub.add_parser("demo", help="answer the four demo questions")
+    sub.add_parser("suite", help="run the assertion test suite and report the pass rate")
     args = parser.parse_args(argv)
 
     if args.command == "generate":
@@ -19,6 +20,10 @@ def main(argv: list[str] | None = None) -> None:
 
     tracing.enable()
     query_engine = engine.make_engine(index.build_index())
+    if args.command == "suite":
+        suite.summarize(suite.run_suite(query_engine))
+        tracing.flush()
+        return
     asked = [args.question] if args.command == "ask" else questions.DEMO_QUESTIONS
     for question in asked:
         result = engine.ask(query_engine, question)
