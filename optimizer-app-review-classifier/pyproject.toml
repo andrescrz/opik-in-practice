@@ -5,7 +5,8 @@ description = "Classify fictional app-store reviews by intent with a prompt that
 requires-python = ">=3.12"
 dependencies = [
     "openai>=1.60",
-    "opik>=2.3.5",
+    "opik>=2.3.6",
+    "opik-optimizer>=3.2.0",
     "python-dotenv>=1.0",
 ]
 

@@ -1,5 +1,6 @@
 """The classifier under test: one chat call that labels a review by intent."""
 
+import functools
 import os
 
 import dotenv
@@ -18,18 +19,18 @@ from opik.integrations.openai import track_openai
 
 MODEL = "gpt-4o-mini"
 
-# A typical first draft: it names the intents but gives no definitions for the
-# edge cases and never says to answer with the label alone.
-# A typical first draft: the intents are loose prose and nothing fixes the
-# label vocabulary, so answers like "Bug" or "Billing issue" miss the exact label.
+# A typical first draft: it names the five intents but also asks for a reason,
+# so answers come back as "bug_report - the app crashes" and fail exact match.
 BASELINE_SYSTEM = """\
-You read app-store reviews for Pebblepad, a budgeting app. Give each review a
-short label for what the reviewer wants: something like a bug, a feature idea,
-praise, a billing issue, or a usability question."""
+You read app-store reviews for Pebblepad, a budgeting app. Tag each review with
+its intent: bug_report, feature_request, praise, billing_complaint or
+usability_confusion. Then add a short note on why you chose it."""
 
-# track_openai wraps the client: every completion becomes an llm span in the
-# project, with token usage and cost.
-client = track_openai(OpenAI(), project_name=PROJECT_NAME)
+@functools.cache
+def get_client():
+    # track_openai wraps the client: every completion becomes an llm span in the
+    # project, with token usage and cost. Built lazily so importing needs no key.
+    return track_openai(OpenAI(), project_name=PROJECT_NAME)
 
 
 def normalize(answer: str) -> str:
@@ -46,7 +47,7 @@ def intent_match(expected: str, answer: str) -> float:
 # under it as a child, so a trace shows review in, label out, and the model call.
 @opik.track(name="classify_review", project_name=PROJECT_NAME)
 def classify(review: str, system: str = BASELINE_SYSTEM) -> str:
-    response = client.chat.completions.create(
+    response = get_client().chat.completions.create(
         model=MODEL,
         temperature=0,
         messages=[
