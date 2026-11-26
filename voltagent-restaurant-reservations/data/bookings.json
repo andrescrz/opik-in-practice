@@ -1,0 +1,8 @@
+[
+  { "id": "LF-1001", "name": "Priya Raman", "date": "2026-12-12", "time": "19:00", "partySize": 4, "tableId": "T3" },
+  { "id": "LF-1002", "name": "Tomas Eriksen", "date": "2026-12-12", "time": "19:30", "partySize": 2, "tableId": "T1" },
+  { "id": "LF-1003", "name": "Bea Okafor", "date": "2026-12-12", "time": "19:00", "partySize": 6, "tableId": "T5" },
+  { "id": "LF-1004", "name": "Jun Watanabe", "date": "2026-12-12", "time": "19:00", "partySize": 8, "tableId": "T6" },
+  { "id": "LF-1005", "name": "Ines Duarte", "date": "2026-12-12", "time": "20:00", "partySize": 4, "tableId": "T4" },
+  { "id": "LF-1006", "name": "Callum Reid", "date": "2026-12-13", "time": "18:30", "partySize": 2, "tableId": "T2" }
+]

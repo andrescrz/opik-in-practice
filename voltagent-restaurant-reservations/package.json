@@ -1,0 +1,22 @@
+{
+  "name": "voltagent-restaurant-reservations",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A VoltAgent reservation host for a fictional restaurant.",
+  "type": "module",
+  "engines": { "node": ">=20.19.0" },
+  "scripts": {
+    "demo": "tsx src/demo.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@voltagent/core": "2.11.1",
+    "dotenv": "^17.2.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

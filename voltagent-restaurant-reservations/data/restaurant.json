@@ -1,0 +1,14 @@
+{
+  "name": "Lantern & Fig",
+  "openingHours": { "open": "17:00", "lastSeating": "21:30" },
+  "slotMinutes": 30,
+  "seatingDurationMinutes": 90,
+  "tables": [
+    { "id": "T1", "seats": 2 },
+    { "id": "T2", "seats": 2 },
+    { "id": "T3", "seats": 4 },
+    { "id": "T4", "seats": 4 },
+    { "id": "T5", "seats": 6 },
+    { "id": "T6", "seats": 8 }
+  ]
+}
