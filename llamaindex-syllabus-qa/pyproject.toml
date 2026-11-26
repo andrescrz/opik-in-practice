@@ -1,0 +1,15 @@
+[project]
+name = "llamaindex-syllabus-qa"
+version = "0.1.0"
+description = "Course-syllabus Q&A with LlamaIndex: generated PDFs, an index, a query engine and a small CLI"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-index>=0.14.25",
+    # The llama-index meta-package no longer bundles file readers; PDFs need this one.
+    "llama-index-readers-file>=0.7.0",
+    "python-dotenv>=1.2.4",
+    "reportlab>=5.0.1",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
