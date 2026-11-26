@@ -1,0 +1,19 @@
+[project]
+name = "langgraph-national-parks-rag"
+version = "0.1.0"
+description = "RAG over a fictional national-park visitor guide with LangGraph"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-openai>=1.0",
+    "langgraph>=1.0",
+    "python-dotenv>=1.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.setuptools]
+packages = ["parkguide"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
