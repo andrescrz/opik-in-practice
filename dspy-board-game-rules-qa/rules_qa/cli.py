@@ -1,11 +1,11 @@
 import argparse
 
-from .config import load_env
+import opik
+
 from .program import answer, build_program, setup_dspy
 
 
 def main() -> None:
-    load_env()
     parser = argparse.ArgumentParser(prog="rules-qa", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     ask = sub.add_parser("ask", help="ask one question")
@@ -21,6 +21,7 @@ def main() -> None:
 
         compile_program()
         print("Compiled program saved.")
+        opik.flush_tracker()
         return
 
     program = build_program()
@@ -29,6 +30,9 @@ def main() -> None:
 
         program.load(COMPILED_PATH)
     print(answer(program, args.question))
+    # Traces are sent from a background thread; flush so a short-lived CLI
+    # run doesn't exit before they are delivered.
+    opik.flush_tracker()
 
 
 if __name__ == "__main__":
