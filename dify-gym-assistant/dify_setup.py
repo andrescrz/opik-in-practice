@@ -2,8 +2,8 @@
 """Configure a running Dify stack for the Ironbark gym assistant, with no clicking.
 
 Creates the admin account, installs the OpenAI model-provider plugin, stores the
-OpenAI key, imports the app from app/ironbark-gym-assistant.yml and mints a
-service API key for demo.py. Every step checks before it creates, so re-running
+OpenAI key, imports the app from app/ironbark-gym-assistant.yml, turns on Dify's
+built-in Opik tracing for the app and mints a service API key for demo.py. Every step checks before it creates, so re-running
 is safe. Standard library only.
 """
 
@@ -142,6 +142,28 @@ def import_app(console: Console) -> str:
     return body["app_id"]
 
 
+def opik_tracing(console: Console, app_id: str) -> None:
+    # Dify's built-in Opik integration: the same four fields as the app's
+    # Monitoring panel. Dify's API and worker containers send the traces, so a
+    # local Opik on the host must be addressed as host.docker.internal.
+    url = os.environ.get("OPIK_URL_OVERRIDE", "http://localhost:5173/api/")
+    url = url.replace("//localhost", "//host.docker.internal").replace("//127.0.0.1", "//host.docker.internal")
+    config = {
+        "api_key": os.environ.get("OPIK_API_KEY", ""),  # empty for a local Opik
+        "workspace": os.environ.get("OPIK_WORKSPACE", "default"),
+        "project": "dify-gym-assistant",  # every trace lands in this Opik project
+        "url": url,
+    }
+    status, body = console.call("GET", f"/apps/{app_id}/trace-config?tracing_provider=opik")
+    exists = status == 200 and not body.get("has_not_configured")
+    # Saving the config makes Dify call Opik once to validate it.
+    console.must("PATCH" if exists else "POST", f"/apps/{app_id}/trace-config",
+                 {"tracing_provider": "opik", "tracing_config": config})
+    # Saving is not enough: tracing stays off until it is switched on.
+    console.must("POST", f"/apps/{app_id}/trace", {"enabled": True, "tracing_provider": "opik"})
+    step(f"Opik tracing on: project dify-gym-assistant at {url}")
+
+
 def service_key(console: Console, app_id: str) -> str:
     if STATE.exists():
         state = json.loads(STATE.read_text())
@@ -160,6 +182,7 @@ def main() -> None:
     openai_plugin(console)
     openai_credential(console, openai_key)
     app_id = import_app(console)
+    opik_tracing(console, app_id)
     key = service_key(console, app_id)
     STATE.write_text(json.dumps({"dify_url": base_url, "app_id": app_id, "service_key": key}, indent=2) + "\n")
     print(f"Done. App: {base_url}/app/{app_id}/configuration  (state in {STATE.name}, git-ignored)")
