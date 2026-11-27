@@ -54,6 +54,8 @@ To re-run cleanly, delete the earlier traces in the Opik UI, but leave the rule 
 
 **My trace table has twice as many rows as chats.** The judge's own runs are recorded in the same project as traces named `online_evaluation`. Filter on the name `garden-chat-turn` when counting your app's traffic.
 
+**`OPIK_API_KEY is not set` the moment anything imports `opik-vercel`, even in tests.** The package builds its Opik client at import time, and with no `OPIK_URL_OVERRIDE` that client targets Opik Cloud, which needs a key. Set the URL for a local Opik (the tests get one from `vite.config.ts`).
+
 **Scores stay empty.** Either the OpenAI key is not in Opik's provider store (the judge traces show an "API key not configured" error), or the rule was created after the traces arrived. Rules only score traces ingested while they are enabled.
 
 ## How it's put together
