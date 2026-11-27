@@ -73,7 +73,7 @@ the **Check shift rules** code against the sample sign-ups.
 
 - `workflow/volunteer-screening.json`: the workflow. `__OPENAI_CREDENTIAL_ID__` is filled in at import time, so no key or credential id is ever committed.
 - `Dockerfile`: n8n 2.41.7 plus `n8n-observability` 1.0.3, wired in with `EXTERNAL_HOOK_FILES`. This is the whole Opik integration.
-- `docker-compose.yml`: the OTLP endpoint and headers (`Comet-Workspace`, `projectName`) come from `setup.sh`.
+- `docker-compose.yml`: the OTLP endpoint and headers (`Comet-Workspace`, `projectName`) come from `setup.sh`. n8n listens on this machine only, never on your network.
 - `setup.sh`: headless install and import through n8n's REST and public APIs.
 - `demo.sh`: posts `data/signups.json` to the webhook.
 - `teardown.sh`: removes the container and volume.

@@ -4,7 +4,9 @@ services:
     build: .
     container_name: n8n-food-bank-volunteer-screening
     ports:
-      - "${N8N_PORT:-5678}:5678"
+      # This machine only: the README publishes the login and the webhook spends your
+      # OpenAI key, so nobody else on your network should reach either.
+      - "127.0.0.1:${N8N_PORT:-5678}:5678"
     environment:
       # Opik's OTLP endpoint, as seen from inside the container. setup.sh derives
       # both values from OPIK_URL_OVERRIDE / OPIK_WORKSPACE / OPIK_API_KEY.

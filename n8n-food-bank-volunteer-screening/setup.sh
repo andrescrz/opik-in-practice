@@ -63,7 +63,9 @@ done
 
 echo "==> Minting an API key"
 API_KEY=$(rest POST /api-keys '{"label":"setup-'"$(date +%s)"'","expiresAt":null,"scopes":["workflow:create","workflow:activate","credential:create"]}' | json "['data']['rawApiKey']")
-api() { curl -sf -X "$1" "$N8N_URL/api/v1$2" -H "X-N8N-API-KEY: $API_KEY" -H 'Content-Type: application/json' ${3:+-d "$3"}; }
+# The body goes through stdin: curl arguments are visible to every user in `ps`,
+# and the credential body carries your OpenAI key.
+api() { printf '%s' "${3:-}" | curl -sf -X "$1" "$N8N_URL/api/v1$2" -H "X-N8N-API-KEY: $API_KEY" -H 'Content-Type: application/json' ${3:+--data-binary @-}; }
 
 echo "==> Creating the OpenAI credential (from the environment, never from a file)"
 CRED_ID=$(api POST /credentials "{\"name\":\"OpenAI (volunteer screening)\",\"type\":\"openAiApi\",\"data\":{\"apiKey\":\"$OPENAI_API_KEY\"}}" | json "['id']")
