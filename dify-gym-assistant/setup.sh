@@ -3,6 +3,7 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOCKER_DIR="$HERE/dify-docker"
+COMPOSE=(docker compose -f "$DOCKER_DIR/docker-compose.yaml" -f "$HERE/docker-compose.localhost.yaml" --project-directory "$DOCKER_DIR")
 
 # Load the repo-root .env without overriding variables already exported.
 if [ -f "$HERE/../.env" ]; then
@@ -28,7 +29,7 @@ CONF
 fi
 
 echo "Starting Dify (the first run pulls about ten images)..."
-docker compose -f "$DOCKER_DIR/docker-compose.yaml" --project-directory "$DOCKER_DIR" up -d
+"${COMPOSE[@]}" up -d
 
 DIFY_URL="http://localhost:$DIFY_PORT" python3 "$HERE/dify_setup.py"
 echo "Dify UI: http://localhost:$DIFY_PORT  (login desk@ironbark.example / IronbarkDesk2026)"

@@ -1,0 +1,12 @@
+# Layered on top of Dify's upstream compose file by setup.sh and teardown.sh.
+# Upstream publishes nginx and the plugin-debugging port on every interface; with
+# the demo login in the README and your OpenAI key stored in Dify, that would let
+# anyone on your network use both. These keep every port on this machine only.
+services:
+  nginx:
+    ports: !override
+      - "127.0.0.1:${EXPOSE_NGINX_PORT:-80}:${NGINX_PORT:-80}"
+      - "127.0.0.1:${EXPOSE_NGINX_SSL_PORT:-443}:${NGINX_SSL_PORT:-443}"
+  plugin_daemon:
+    ports: !override
+      - "127.0.0.1:${EXPOSE_PLUGIN_DEBUGGING_PORT:-5003}:${PLUGIN_DEBUGGING_PORT:-5003}"

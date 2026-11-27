@@ -77,6 +77,7 @@ Offline tests (no Dify, no Opik, no keys): `python3 -m unittest discover tests`.
 - `setup.sh`: creates `dify-docker/.env` from Dify's template (port 8090), starts the stack and runs `dify_setup.py`.
 - `demo.py`: two member conversations through Dify's service API (`/v1/chat-messages`).
 - `teardown.sh`: stops the stack and deletes its data.
+- `docker-compose.localhost.yaml`: layered over Dify's compose file so its ports listen on this machine only, never on your network.
 - `tests/test_dify_setup.py`: offline tests for `dify_setup.py` against a fake console.
 - `dify-docker/`: Dify's upstream docker-compose files for release 1.17.1.
 
