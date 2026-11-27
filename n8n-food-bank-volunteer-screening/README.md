@@ -53,6 +53,9 @@ You need Docker, `curl`, `python3`, an OpenAI key and an Opik instance. A local 
 The n8n UI is on `http://localhost:5678` (login `coordinator@riverbend.example` / `Riverbend-demo-1`, a
 local-only demo account). Set `N8N_PORT` to move it.
 
+Offline tests (no n8n, no Opik, no keys): `node --test`. They check the exported workflow's node chain and run
+the **Check shift rules** code against the sample sign-ups.
+
 ## Poke around
 
 - Carmen Delgado wants the kids' snack program and has both certificates. The prompt says kid-facing roles need an interview first. Across our runs the model answered both `approve` and `interview` for her. Run `./demo.sh` a few times and compare her **Screen motivation** spans side by side: the prompt is identical, and only the reply moves.
@@ -75,6 +78,7 @@ local-only demo account). Set `N8N_PORT` to move it.
 - `demo.sh`: posts `data/signups.json` to the webhook.
 - `teardown.sh`: removes the container and volume.
 - `data/signups.json`: four fictional volunteers.
+- `tests/workflow.test.mjs`: offline checks on the workflow JSON and its shift-rules code.
 
 ---
 
