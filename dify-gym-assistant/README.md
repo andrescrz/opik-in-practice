@@ -53,6 +53,9 @@ and an Opik instance. A local self-hosted Opik on `http://localhost:5173` needs 
 The Dify UI login is `desk@ironbark.example` / `IronbarkDesk2026`, a local-only demo account. Set `DIFY_PORT` to
 move it off 8090.
 
+Offline tests (no Dify, no Opik, no keys): `python3 -m unittest discover tests`. They check the Opik settings
+`dify_setup.py` saves, including the `localhost` rewrite, and that re-running updates rather than duplicates.
+
 ## Poke around
 
 - Add "18:30 is outside off-peak hours" style guidance to the prompt in the Dify UI (or the DSL) and re-run `demo.py`. Compare Ana's two first-turn traces side by side.
@@ -74,6 +77,7 @@ move it off 8090.
 - `setup.sh`: creates `dify-docker/.env` from Dify's template (port 8090), starts the stack and runs `dify_setup.py`.
 - `demo.py`: two member conversations through Dify's service API (`/v1/chat-messages`).
 - `teardown.sh`: stops the stack and deletes its data.
+- `tests/test_dify_setup.py`: offline tests for `dify_setup.py` against a fake console.
 - `dify-docker/`: Dify's upstream docker-compose files for release 1.17.1.
 
 ---
