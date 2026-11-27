@@ -80,6 +80,11 @@ command in the n8n and Dify READMEs), so you can see that tracing doesn't get in
 Every place the code touches Opik (wrapping a client, opening a span, logging usage, attaching a file, creating
 a dataset) has a short comment saying what it produces in Opik and what breaks without it.
 
+## Contributing
+
+Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Please report security issues
+privately, as described in [SECURITY.md](SECURITY.md).
+
 ## License
 
 [Apache 2.0](LICENSE)

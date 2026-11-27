@@ -1,0 +1,10 @@
+name: Suggest an improvement
+description: A clearer explanation, a missing gotcha, or an Opik feature an example could show.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you change, and why?
+    validations:
+      required: true
