@@ -11,7 +11,6 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv(usecwd=False) or Path(__file__).resolve().parent.parent / ".env")
 # Every trace from this app lands in this Opik project.
 os.environ["OPIK_PROJECT_NAME"] = "litellm-code-review-router"
-os.environ.pop("ANTHROPIC_BASE_URL", None)
 
 import litellm  # noqa: E402
 import opik  # noqa: E402
