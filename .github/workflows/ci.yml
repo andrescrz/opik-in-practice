@@ -1,0 +1,133 @@
+# Runs every example's offline tests: no API keys, no Opik server, no secrets.
+# The "ci" job at the end is the single required check on main.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  OPIK_TRACK_DISABLE: "true"
+
+jobs:
+  python:
+    name: python (${{ matrix.example }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - crewai-home-renovation-planner
+          - dspy-board-game-rules-qa
+          - langchain-fastapi-library-recs
+          - langgraph-national-parks-rag
+          - langgraph-postmortem-team
+          - litellm-code-review-router
+          - llamaindex-syllabus-qa
+          - openai-agents-insurance-claims
+          - openai-coworking-concierge
+          - openai-py-storybook-illustrations
+          - openai-shipping-label-extraction
+          - opik-py-redaction-pipeline
+          - optimizer-app-review-classifier
+          - smolagents-solar-energy-analyst
+          - whisper-vet-voicemail-triage
+    env:
+      # uv.lock is not committed, so installs resolve fresh; skipping releases younger
+      # than three days keeps a just-published compromised package out of CI.
+      UV_EXCLUDE_NEWER: "3 days"
+    defaults:
+      run:
+        working-directory: ${{ matrix.example }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
+        with:
+          version: "0.11.19"
+          python-version: "3.12"
+          enable-cache: false
+      # opik is exempt: the examples track the newest Opik SDK on purpose.
+      - run: uv run --exclude-newer-package 'opik=PT0S' pytest -q
+
+  typescript:
+    name: typescript (${{ matrix.example }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - beeai-zoo-care-triage
+          - mastra-banking-agent
+          - ollama-langchainjs-homebrew-rag
+          - opik-ts-podcast-title-prompts
+          - temporal-ts-grant-review
+          - vercel-sveltekit-garden-assistant
+          - voltagent-restaurant-reservations
+    defaults:
+      run:
+        working-directory: ${{ matrix.example }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      # Lockfile-exact installs with no install scripts, so a dependency cannot run code at install time.
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+
+  dify:
+    name: low-code (dify-gym-assistant)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: dify-gym-assistant
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover tests
+
+  n8n:
+    name: low-code (n8n-food-bank-volunteer-screening)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: n8n-food-bank-volunteer-screening
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - run: node --test
+
+  ci:
+    name: ci
+    if: always()
+    needs: [python, typescript, dify, n8n]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Every example's tests passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          for r in $RESULTS; do [ "$r" = success ] || exit 1; done
