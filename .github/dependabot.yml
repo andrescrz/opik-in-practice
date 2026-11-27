@@ -1,0 +1,13 @@
+# Keeps the SHA-pinned actions in .github/workflows current. Example dependencies
+# get security updates only (enabled in the repository settings), not version bumps.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+    groups:
+      actions:
+        patterns: ["*"]
