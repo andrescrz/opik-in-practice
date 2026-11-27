@@ -68,8 +68,8 @@ span, thread or experiment to open in Opik and what you'll find there.
 3. **Run.** Follow the example's README. Python examples use [uv](https://docs.astral.sh/uv/) (`uv run ...`), TypeScript ones use `npm install && npm run demo`, and the n8n and Dify ones use `./setup.sh` and a demo script.
 4. **Look.** Open the Opik project named exactly like the folder.
 
-Python and TypeScript examples also ship offline tests that need no keys and no Opik server (`uv run pytest` or
-`npm test`), so you can see that tracing doesn't get in the way of unit tests.
+Every example also ships offline tests that need no keys and no Opik server (`uv run pytest`, `npm test`, or the
+command in the n8n and Dify READMEs), so you can see that tracing doesn't get in the way of unit tests.
 
 ## What every folder contains
 
